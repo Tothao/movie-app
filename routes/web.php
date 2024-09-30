@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DirectorController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,10 +26,7 @@ Route::get('now-showing', function (){
 //Route admin
 Route::prefix('admin')->group(function (){
    Route::get('/',[AdminController::class, 'dashboard'])->name('admin.dashboard');
-   Route::get('/director',[DirectorController::class, 'index'])->name('admin.director');
-   Route::get('/director/create',[DirectorController::class, 'create'])->name('admin.director.create');
-   Route::post('/director/store',[DirectorController::class, 'store'])->name('admin.director.store');
-   Route::get('director/remove/{id}', [DirectorController::class, 'destroy'])->name('admin.director.delete');
+   Route::get('director',[DirectorController::class, 'index'])->name('admin.director');
 
 });
 

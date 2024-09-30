@@ -1,10 +1,10 @@
 <?php
 
-
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Director;
+use Illuminate\Support\Facades\DB;
 
 class DirectorSeeder extends Seeder
 {
@@ -13,16 +13,26 @@ class DirectorSeeder extends Seeder
      */
     public function run(): void
     {
-        $directors = [
-            ['name' => 'Christopher Nolan', 'gender' => 'male'],
-            ['name' => 'Quentin Tarantino', 'gender' => 'male'],
-            ['name' => 'Sofia Coppola', 'gender' => 'female'],
-            ['name' => 'Kathryn Bigelow', 'gender' => 'female'],
-            ['name' => 'Steven Spielberg', 'gender' => 'male'],
-        ];
+        DB::table('directors')->insert([
+            [
+                'name' => 'Christopher Nolan',
+                'age' => 50,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Steven Spielberg',
+                'age' => 74,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Martin Scorsese',
+                'age' => 78,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
 
-        foreach ($directors as $director) {
-            Director::create($director);
-        }
     }
 }

@@ -35,8 +35,8 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{route('admin.director.create')}}">them moi</a>
-                <a class="collapse-item" href="{{route('admin.director')}}">Danh sach</a>
+                <a class="collapse-item" href="">them moi</a>
+                <a class="collapse-item" href="">Danh sach</a>
             </div>
         </div>
     </li>
