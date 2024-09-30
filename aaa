@@ -1,0 +1,84 @@
+CRUD:
+- create: tao moi
+- read: doc
+- update: cap nhat
+- delete: xoa
+
+
+Movie: movies      (Model --> database: CRUD)
+ - id: primary key - .int
+ - title: varchar
+ - release_date: date
+ - duration (phút): int
+ - Language: varchar
+ - rated: varchar
+ - discription: text
+ - poster_url: varchar
+ - trailer_url
+
+
+ entity
+
+Dao dien: diractors  - Model - controller - view
+ - name
+
+
+movie_diractor: pivot
+ - id
+ - movie_id
+ - diractor_id
+
+DIen vien: actors
+ - Name
+
+movie_actor
+- id
+- actor_id
+- movie_id
+
+The loai: genres
+ - name
+
+movie_genre
+- id
+- movie_id
+- genre_id
+
+
+rap phim
+- ten rap
+- dia chi
+- hotline
+- tinhx
+
+phong chieu phim
+- rap phim id
+- ten phong chieu
+- so ghe ngoi
+
+ghe
+- phong chieu phim id
+- so ghe (A1, B2....)
+- cot (1, 2...)
+- hang(A, B...)
+- type (thuong, vip)
+....
+
+user:
+- name
+- email
+.....
+
+suat chieu phim
+- movie_id
+- phong chieu _ id
+- ngay chieu
+- gio chieu
+- gia ve
+
+
+
+
+
+
+
