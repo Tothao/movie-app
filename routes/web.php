@@ -27,6 +27,8 @@ Route::get('now-showing', function (){
 Route::prefix('admin')->group(function (){
    Route::get('/',[AdminController::class, 'dashboard'])->name('admin.dashboard');
    Route::get('director',[DirectorController::class, 'index'])->name('admin.director');
+   Route::get('director/create', [DirectorController::class, 'create'])->name('admin.director.create');
+   Route::post('director', [DirectorController::class, 'store'])->name('admin.director.store');
 
 });
 
