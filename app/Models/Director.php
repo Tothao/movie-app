@@ -12,5 +12,9 @@ class Director extends Model
     protected $fillable = [
         'name',
         'age'
-];
+]; 
+public function movies()
+{
+    return $this->belongsToMany(Movies::class, 'director_movie');
+}
 }

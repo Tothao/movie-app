@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DirectorController;
+use App\Http\Controllers\MovieController;
 
 
 /*
@@ -29,8 +30,17 @@ Route::prefix('admin')->group(function (){
    Route::get('director',[DirectorController::class, 'index'])->name('admin.director');
    Route::get('director/create', [DirectorController::class, 'create'])->name('admin.director.create');
    Route::post('director', [DirectorController::class, 'store'])->name('admin.director.store');
+   Route::get('director/{id}/edit', [DirectorController::class, 'edit'])->name('admin.director.edit');
+   Route::put('director/{id}', [DirectorController::class, 'update'])->name('admin.director.update');
+   Route::delete('director/{id}', [DirectorController::class, 'destroy'])->name('admin.director.destroy');
 
 });
+
+   Route::prefix('admin')->group(function () {
+       Route::resource('movie', MovieController::class);
+   });
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -44,6 +54,6 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
