@@ -3,12 +3,12 @@
 @section('content')
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
-        <h6 class="m-0 font-weight-bold text-primary">Danh sách phim</h6>
-        <a href="{{ route('admin.movies.create') }}"  class="btn btn-success btn-icon-split">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách diễn viên</h6>
+        <a href="{{ route('admin.actors.create') }}" class="btn btn-success btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
             </span>
-            <span class="text">Thêm phim mới</span>
+            <span class="text">Thêm diễn viên mới</span>
         </a>
     </div>
     <div class="card-body">
@@ -25,31 +25,27 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Tiêu đề</th>
-                        <th>Năm phát hành</th>
-                        <th>Đạo diễn</th>
-                        <th>Thể loại</th>
+                        <th>Tên</th>
+                        <th>Ngày sinh</th>
+                        <th>Giới tính</th>
                         <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($movies as $movie)
+                    @foreach($actors as $actor)
                     <tr>
-                        <td>{{ $movie->id }}</td>
-                        <td>{{ $movie->title }}</td>
-                        <td>{{ $movie->release_year }}</td>
+                        <td>{{ $actor->id }}</td>
+                        <td>{{ $actor->name }}</td>
+                        <td>{{ $actor->birthdate }}</td>
+                        <td>{{ $actor->gender }}</td>
                         <td>
-                            {{ $movie->directors->pluck('name')->implode(', ') }}
-                        </td>
-                        <td>{{ $movie->genre }}</td>
-                        <td>
-                            <a href="{{ route('admin.movies.edit', $movie->id) }}" class="btn btn-info btn-circle btn-sm">
+                            <a href="{{ route('admin.actors.edit', $actor->id) }}" class="btn btn-info btn-circle btn-sm">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <form action="{{ route('admin.movies.destroy', $movie->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('admin.actors.destroy', $actor->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-circle btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa phim này?');">
+                                <button type="submit" class="btn btn-danger btn-circle btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa diễn viên này?');">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>

@@ -31,12 +31,13 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
-            <span>Dao dien</span>
+            <span>movie data</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('admin.movie.index') }}">Danh sach phim</a>
-                <a class="collapse-item" href="">Danh sach</a>
+                <a class="collapse-item" href="{{ route('admin.director') }}">Danh sách đạo diễn</a>
+                <a class="collapse-item" href="{{ route('admin.movies.index') }}">Danh sách phim</a>
+                <a class="collapse-item" href="{{ route('admin.actors.index') }}">Danh sách diễn viên</a>
             </div>
         </div>
     </li>

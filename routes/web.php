@@ -5,9 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DirectorController;
-use App\Http\Controllers\MovieController;
-
-
+use App\Http\Controllers\MoviesController;
+use App\Http\Controllers\ActorsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,7 +23,7 @@ Route::get('now-showing', function (){
     return view('client.pages.now-showing');
 })->name('now-showing');
 
-//Route admin
+//Route admin/director
 Route::prefix('admin')->group(function (){
    Route::get('/',[AdminController::class, 'dashboard'])->name('admin.dashboard');
    Route::get('director',[DirectorController::class, 'index'])->name('admin.director');
@@ -36,11 +35,31 @@ Route::prefix('admin')->group(function (){
 
 });
 
+// route admin/movies
    Route::prefix('admin')->group(function () {
-       Route::resource('movie', MovieController::class);
+       Route::resource('movies', MoviesController::class)->names([
+           'index' => 'admin.movies.index',
+           'create' => 'admin.movies.create',
+           'store' => 'admin.movies.store',
+           'edit' => 'admin.movies.edit',
+           'update' => 'admin.movies.update',
+           'destroy' => 'admin.movies.destroy',
+       ])->except(['show']);
    });
 
 
+
+// route admin/actors
+   Route::prefix('admin')->group(function () {
+       Route::resource('actors', ActorsController::class)->names([
+           'index' => 'admin.actors.index',
+           'create' => 'admin.actors.create',
+           'store' => 'admin.actors.store',
+           'edit' => 'admin.actors.edit',
+           'update' => 'admin.actors.update',
+           'destroy' => 'admin.actors.destroy',
+       ])->except(['show']);
+   });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
