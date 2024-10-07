@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Director;
 use Illuminate\Http\Request;
 use App\Models\Movie;
+use App\Models\Director;
+use App\Models\Actor;
+use App\Models\Genre;
 class MoviesController extends Controller
 {
-
+    
     public function index()
     {
+
         $movies = Movie::all();
-        return view('admin.movies.index', compact('movies'));
+        $categories = Genre::all();  
+        return view('admin.movies.index', compact('movies','categories'));
     }
 
     /**
@@ -20,7 +24,10 @@ class MoviesController extends Controller
     public function create()
     {
         $directors = Director::all();
-        return view('admin.movies.create', compact('directors'));
+        $categories = Genre::all();
+        $actors = Actor::all();
+        return view('admin.movies.create', compact('directors', 'categories', 'actors'));
+        
     }
 
     /**
@@ -28,19 +35,26 @@ class MoviesController extends Controller
      */
     public function store(Request $request)
     {
-        $movie = new Movie();
-//        $movie->title = $request->title;
-//        $movie->description = $request->description;
-//        $movie->release_year = $request->release_year;
-//        $movie->director = $request->director;
-//        $movie->genre = $request->genre;
-
+         $movie = new Movie();
+        // $movie->title = $request->title;
+        // $movie->description = $request->description;
+        // $movie->release_year = $request->release_year;
+        // $movie->director = $request->director;
+        // $movie->genre = $request->genre;
+        // $movie->save();
         $movie->fill($request->all());
         $movie->save();
-
         if ($request->has('directorIds')) {
             $movie->directors()->attach($request->input('directorIds')); // Gán quan hệ nhiều-nhiều
         }
+        if ($request->has('genreIds')) {
+            $movie->genres()->attach($request->input('genreIds'));
+        }
+        if ($request->has('actorIds')) {
+            $movie->actors()->attach($request->input('actorIds'));
+        }
+     
+        
         return redirect()->route('admin.movies.index')->with('success', 'Phim đã được thêm thành công');
     }
 
@@ -50,7 +64,10 @@ class MoviesController extends Controller
     public function show(string $id)
     {
         $movie = Movie::find($id);
-        return view('admin.movies.edit', compact('movie'));
+        $movie->load('directors');
+        $movie->load('category');
+        $movie->load('actors');
+        return view('admin.movies.edit', compact('movie', 'directors','actors','categories'));
     }
 
     /**
@@ -59,9 +76,10 @@ class MoviesController extends Controller
     public function edit(string $id)
     {
         $movie = Movie::find($id);
-        $directos = Director::all();
-
-        return view('admin.movies.edit', ['movie' => $movie, 'directors' => $directos]);
+        $directors = Director::all();
+        $actors = Actor::all();
+        $categories = Genre::all();
+        return view('admin.movies.edit', compact('movie', 'directors', 'actors','categories'));
     }
 
     /**
@@ -69,19 +87,20 @@ class MoviesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $movie = Movie::find($id);
+         $movie = Movie::find($id);
         // $movie->title = $request->title;
         // $movie->description = $request->description;
         // $movie->release_year = $request->release_year;
+        // $movie->director = $request->director;
+        // $movie->genre = $request->genre;
         $movie->fill($request->all());
-
         $movie->save();
-        // Xóa tất cả các quan hệ đạo diễn hiện tại
-        $movie->directors()->detach();
-
-        // Thêm các quan hệ đạo diễn mới
+       
         if ($request->has('directorIds')) {
-            $movie->directors()->attach($request->input('directorIds'));
+            $movie->directors()->sync($request->input('directorIds')); // Gán quan hệ nhiều-nhiều
+        }
+        if ($request->has('actorIds')) {
+            $movie->actors()->sync($request->input('actorIds')); // Gán quan hệ nhiều-nhiều
         }
         return redirect()->route('admin.movies.index')->with('success', 'Phim đã được cập nhật thành công');
     }

@@ -11,12 +11,23 @@ class Movie extends Model
     protected $fillable = [
         'title',
         'description',
-        'release_year'
-    ];
+        'release_date',
+        'category_id'
 
+    ];
     public function directors()
     {
-        return $this->belongsToMany(Director::class);
+        return $this->belongsToMany(Director::class, 'movies_director');
     }
 
+    public function actors()
+    {
+        return $this->belongsToMany(Actor::class, 'actor_movie');
+    }
+
+    public function genres()
+    {
+        return $this->belongsToMany(Genre::class, 'genre_movie');
+    }
+    
 }

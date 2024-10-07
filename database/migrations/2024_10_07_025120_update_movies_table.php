@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('movies', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->text('description')->nullable();
+        Schema::table('movies', function (Blueprint $table) {
+            $table->dropColumn('release_year');
+
+            // Thêm cột release_date kiểu date
             $table->date('release_date')->nullable();
-            $table->string('director')->nullable();
-            $table->string('genre')->nullable();
-            $table->timestamps();
         });
     }
 
@@ -27,6 +24,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('movies');
+        Schema::table('movies', function (Blueprint $table) {
+            $table->integer('release_year')->nullable();
+
+            // Xóa cột release_date
+            $table->dropColumn('release_date');
+        });
     }
 };

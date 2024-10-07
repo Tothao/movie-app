@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('movies', function (Blueprint $table) {
+            if (Schema::hasColumn('movies', 'director')) {
+                $table->dropColumn('director'); //tên cột muốn xóa 
+            }
         });
     }
 
@@ -22,6 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::table('movies', function (Blueprint $table) {
+            //
+        });
     }
 };
