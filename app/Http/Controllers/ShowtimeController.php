@@ -34,7 +34,7 @@ class ShowtimeController extends Controller
 
         // Lọc các rạp theo city và lấy các showtimes theo movieId và date
         $cinemas = Cinema::where('city', $city)
-            ->with(['halls.showtimes' => function ($query) use ($date, $movieId) {
+            ->with(['rooms.showtimes' => function ($query) use ($date, $movieId) {
                 $query->where('show_date', $date)
                     ->where('movie_id', $movieId); // Lọc theo movieId
             }])

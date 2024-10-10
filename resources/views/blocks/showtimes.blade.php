@@ -3,12 +3,13 @@
         <div class="cinema">
             <h3>{{ $cinema->name }}</h3>
             <div class="cinema_rooms">
-                @foreach($cinema->cinema_rooms as $cinema_room)
+                @foreach($cinema->rooms as $cinema_room)
                     <div class="cinema_room mb-3">
                         <p>{{ $cinema_room->name }}</p>
                         <div class="showtimes btn-group flex-wrap">
                             @foreach($cinema_room->showtimes as $showtime)
-                                <a href="{{ route('showtime.seatSelection', ['showtime_id' => $showtime->id]) }}" class="btn btn-outline-primary select-showtime">
+                            <a href="#" class="btn btn-outline-primary select-showtime">
+                                {{-- <a href="{{ route('showtime.seatSelection', ['showtime_id' => $showtime->id]) }}" class="btn btn-outline-primary select-showtime"> --}}
                                     {{ $showtime->show_time }}
                                 </a>
                             @endforeach
