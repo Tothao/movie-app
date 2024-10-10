@@ -7,6 +7,7 @@ use App\Models\Movie;
 use App\Models\Director;
 use App\Models\Actor;
 use App\Models\Genre;
+use App\Models\Category;
 class MoviesController extends Controller
 {
     
@@ -15,7 +16,8 @@ class MoviesController extends Controller
 
         $movies = Movie::all();
         $genres = Genre::all();  
-        return view('admin.movies.index', compact('movies','genres'));
+        $categories = Category::all();  
+        return view('admin.movies.index', compact('movies','genres','categories'));
     }
 
     /**
@@ -26,7 +28,8 @@ class MoviesController extends Controller
         $directors = Director::all();
         $genres = Genre::all();
         $actors = Actor::all();
-        return view('admin.movies.create', compact('directors', 'genres', 'actors'));
+        $categories = Category::all();
+        return view('admin.movies.create', compact('directors', 'genres', 'actors','categories' ));
         
     }
 
@@ -42,8 +45,13 @@ class MoviesController extends Controller
          // Điền các trường còn lại từ request
          $movie->fill($request->except('image_path')); // Để bỏ qua trường 'image_path'
          $movie->save();
+         $movie->category_id = $request->category_id;
+         $movie->save();
          if ($request->has('directorIds')) {
             $movie->directors()->attach($request->input('directorIds')); // Gán quan hệ nhiều-nhiều
+        }
+        if ($request->has('category_ids')) {
+            $movie->categories()->attach($request->input('category_ids'));
         }
         if ($request->has('genreIds')) {
             $movie->genres()->attach($request->input('genreIds'));
@@ -69,10 +77,11 @@ class MoviesController extends Controller
     public function show(string $id)
     {
         $movie = Movie::find($id);
-        $movie->load('directors');
-        $movie->load('genres');
-        $movie->load('actors');
-        return view('admin.movies.edit', compact('movie', 'directors','actors','genres'));
+        $directors = $movie->directors;
+        $genres = $movie->genres;
+        $actors = $movie->actors;
+        $categories = $movie->category;
+        return view('client.pages.movie-ditall', compact('movie', 'directors','actors','genres','categories'));
     }
 
     /**
@@ -84,7 +93,8 @@ class MoviesController extends Controller
         $directors = Director::all();
         $actors = Actor::all();
         $genres = Genre::all();
-        return view('admin.movies.edit', compact('movie', 'directors', 'actors','genres'));
+        $categories = Category::all();
+        return view('admin.movies.edit', compact('movie', 'directors', 'actors','genres','categories'));
     }
 
     /**
@@ -96,16 +106,25 @@ class MoviesController extends Controller
         // $movie->title = $request->title;
         // $movie->description = $request->description;
         // $movie->release_year = $request->release_year;
-        // $movie->director = $request->director;
-        // $movie->genre = $request->genre;
-        $movie->fill($request->all());
+        if ($request->hasFile('image_path')) {
+            $imagePath = $request->file('image_path')->store('images', 'public');
+            $movie->image_path = $imagePath; // Cập nhật đường dẫn ảnh
+        }
+    
+        // Cập nhật thông tin phim từ request
+        $movie->fill($request->except(['directorIds', 'actorIds', 'image_path', 'category_id','genres'])); // Không cập nhật các trường liên quan đến mối quan hệ
+        $movie->save(); // Lưu thông tin phim;
+        $movie->category_id = $request->category_id;
         $movie->save();
-       
+        
         if ($request->has('directorIds')) {
             $movie->directors()->sync($request->input('directorIds')); // Gán quan hệ nhiều-nhiều
         }
         if ($request->has('actorIds')) {
             $movie->actors()->sync($request->input('actorIds')); // Gán quan hệ nhiều-nhiều
+        }
+        if ($request->has('genreIds')) {
+            $movie->genres()->sync($request->input('genreIds'));
         }
         return redirect()->route('admin.movies.index')->with('success', 'Phim đã được cập nhật thành công');
     }

@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
     
         $this->call(GenreSeeder::class);
         $this->call(CategoriesTableSeeder::class);
-
+        $this->call(CinemaSeeder::class);
+        $this->call(CinemaRoomSeeder::class);
         //     'email' => 'test@example.com',
         // ]);
     }

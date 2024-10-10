@@ -31,6 +31,7 @@
                         <th>Đạo diễn</th>
                         <th>Diễn viên</th>
                         <th>Thể loại</th>
+                        <th>Trạng thái</th>
                         <th>Hành động</th>
                     </tr>
                 </thead>
@@ -44,6 +45,7 @@
                         <td>{{ $movie->directors->pluck('name')->implode(', ') }}</td>
                         <td>{{ $movie->actors->pluck('name')->implode(', ') }}</td>
                         <td>{{ $movie->genres->pluck('name')->implode(', ') }}</td>
+                        <td>{{ $movie->category->name ?? ' ' }}</td>
                         <td>
                             <a href="{{ route('admin.movies.edit', $movie->id) }}" class="btn btn-info btn-circle btn-sm">
                                 <i class="fas fa-edit"></i>

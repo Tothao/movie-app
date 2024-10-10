@@ -33,6 +33,17 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="category_id">Thể loại phim</label>
+                        <select class="form-control" id="category_id" name="category_id" required>
+                            <option value="">Chọn thể loại</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ old('category_id', $movie->category_id) == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">

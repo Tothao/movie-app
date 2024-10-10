@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\ActorsController;
+use App\Http\Controllers\ShowtimeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,11 +18,15 @@ use App\Http\Controllers\ActorsController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+//client
 Route::get('/',[HomeController::class, 'index'])->name('home');
-Route::get('now-showing', function (){
-    return view('client.pages.now-showing');
-})->name('now-showing');
+Route::get('movies/showing', [HomeController::class, 'showing'])->name('movies.showing');
+Route::get('movies/upcoming', [HomeController::class, 'upcoming'])->name('movies.upcoming');
+Route::get('/movies/{id}', [MoviesController::class, 'show'])->name('movies.show');
+
+//booking
+//Route::get('/book-ticket/{showtime}', [BookingController::class, 'showBookingForm'])->name('booking.form');
+Route::get('/get-showtimes', [ShowtimeController::class, 'getShowtimes'])->name('get.showtimes');
 
 //Route admin/director
 Route::prefix('admin')->group(function (){

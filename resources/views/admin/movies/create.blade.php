@@ -30,6 +30,14 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="category_id">Danh mục</label>
+                        <select class="form-control" id="category_id" name="category_id" required>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
