@@ -93,10 +93,14 @@
         </div>
     </div>
 </div>
-
 <script>
-    $(document).ready(function () {
-        let selectedDate = null;
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof $ === 'undefined') {
+        console.error('jQuery is not loaded. Please make sure jQuery is included before this script.');
+        return;
+    }
+
+    let selectedDate = null;
         let selectedCity = null;
         let movieId = null;
 
@@ -140,5 +144,7 @@
                 $('#confirmBooking').prop('disabled', true); // Tắt nút Tiếp tục nếu chưa chọn
             }
         }
-    });
+
+    // ... rest of the existing JavaScript code ...
+});
 </script>

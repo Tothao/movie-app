@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-4">
-            <img src="{{ asset('storage/' . $movie->image_path) }}" alt="{{ $movie->title }}" class="img-fluid rounded">
+            <img src="{{ asset('storage/' . $movie->image_path) }}" alt="{{ $movie->title }}" class="img-fluid rounded" />
         </div>
         <div class="col-md-8">
             <h1>{{ $movie->title }}</h1>
@@ -16,7 +16,7 @@
             <p><strong>Ngôn ngữ:</strong> {{ $movie->language }}</p>
             <p><strong>Rated:</strong> {{ $movie->rated }}</p>
             @include('blocks.booking-modal')
-            
+
         </div>
     </div>
 
