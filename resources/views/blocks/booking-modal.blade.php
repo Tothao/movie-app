@@ -146,5 +146,29 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
     // ... rest of the existing JavaScript code ...
+
+
+    function updateTheaterSchedule() {
+            if (selectedDate && selectedCity) {
+                // Gọi AJAX để lấy dữ liệu suất chiếu
+                $.ajax({
+                    url: '/get-showtimes', // Route Laravel để lấy dữ liệu suất chiếu
+                    method: 'GET',
+                    data: {
+                        date: selectedDate,
+                        city: selectedCity,
+                        movieId: movieId
+                    },
+                    success: function (data) {
+                        $('#theater-schedule').html(data); // Cập nhật HTML của rạp và suất chiếu
+                    }
+                });
+            } else {
+                $('#theater-schedule').html('<p>Chọn ngày và tỉnh để hiển thị các rạp và suất chiếu.</p>');
+                $('#confirmBooking').prop('disabled', true); // Tắt nút Xác Nhận nếu chưa chọn
+            }
+        }
 });
+
+
 </script>

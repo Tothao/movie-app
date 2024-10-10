@@ -8,6 +8,7 @@ use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\ActorsController;
 use App\Http\Controllers\ShowtimeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
