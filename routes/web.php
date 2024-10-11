@@ -8,6 +8,11 @@ use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\ActorsController;
 use App\Http\Controllers\ShowtimeController;
+use App\Http\Controllers\SeatController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\BookingController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +33,18 @@ Route::get('/movies/{id}', [MoviesController::class, 'show'])->name('movies.show
 //booking
 //Route::get('/book-ticket/{showtime}', [BookingController::class, 'showBookingForm'])->name('booking.form');
 Route::get('/get-showtimes', [ShowtimeController::class, 'getShowtimes'])->name('get.showtimes');
+
+
+
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/showtimes/{showtime_id}/seats', [SeatController::class, 'seatSelection'])->name('showtime.seatSelection');
+    Route::post('/payment', [PaymentController::class, 'showPayment'])->name('payment.show');
+    Route::post('/payment/checkout', [PaymentController::class, 'checkout'])->name('payment.checkout');
+    Route::get('/booking/success/{booking}', [BookingController::class, 'showSuccess'])->name('booking.success');
+});
+
+
 
 //Route admin/director
 Route::prefix('admin')->group(function (){

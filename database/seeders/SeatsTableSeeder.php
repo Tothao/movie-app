@@ -12,46 +12,26 @@ class SeatsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $cinemaRoomId = 1; // Thay đổi theo ID phòng chiếu bạn muốn
+        $cinemaRoomIds = [1, 2, 3]; // Danh sách ID của các phòng chiếu
 
-        // Thêm dữ liệu cho ghế
-        DB::table('seats')->insert([
-            [
-                'cinema_room_id' => $cinemaRoomId,
-                'seat_number' => 'A1',
-                'row' => 'A',
-                'column' => 1,
-                'type' => 'thuong', // Hoặc 'vip'
-            ],
-            [
-                'cinema_room_id' => $cinemaRoomId,
-                'seat_number' => 'A2',
-                'row' => 'A',
-                'column' => 2,
-                'type' => 'thuong',
-            ],
-            [
-                'cinema_room_id' => $cinemaRoomId,
-                'seat_number' => 'B1',
-                'row' => 'B',
-                'column' => 1,
-                'type' => 'vip',
-            ],
-            [
-                'cinema_room_id' => $cinemaRoomId,
-                'seat_number' => 'B2',
-                'row' => 'B',
-                'column' => 2,
-                'type' => 'vip',
-            ],
-            [
-                'cinema_room_id' => $cinemaRoomId,
-                'seat_number' => 'C1',
-                'row' => 'C',
-                'column' => 1,
-                'type' => 'thuong',
-            ],
-            // Thêm nhiều ghế hơn nếu cần
-        ]);
+foreach ($cinemaRoomIds as $cinemaRoomId) {
+    for ($row = 'A'; $row <= 'E'; $row++) { // Từ A đến E cho đủ 50 ghế
+        for ($col = 1; $col <= 10; $col++) { // 10 cột mỗi hàng
+            $seatNumber = $row . $col;
+            $type = ($row == 'A' || $row == 'B') ? 'vip' : 'thuong'; // Hàng A và B là VIP, còn lại là thường
+            
+            DB::table('seats')->insert([
+                'cinema_room_id' => $cinemaRoomId, // Sử dụng ID của phòng chiếu hiện tại
+                'seat_number' => $seatNumber,
+                'row' => $row,
+                'column' => $col,
+                'type' => $type,
+                'is_available' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
+}
+}
 }

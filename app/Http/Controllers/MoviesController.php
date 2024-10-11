@@ -48,16 +48,16 @@ class MoviesController extends Controller
          $movie->category_id = $request->category_id;
          $movie->save();
          if ($request->has('directorIds')) {
-            $movie->directors()->attach($request->input('directorIds')); // Gán quan hệ nhiều-nhiều
+            $movie->directors()->syncWithoutDetaching($request->input('directorIds'));
         }
         if ($request->has('category_ids')) {
-            $movie->categories()->attach($request->input('category_ids'));
+            $movie->categories()->syncWithoutDetaching($request->input('category_ids'));
         }
         if ($request->has('genreIds')) {
-            $movie->genres()->attach($request->input('genreIds'));
+            $movie->genres()->syncWithoutDetaching($request->input('genreIds'));
         }
         if ($request->has('actorIds')) {
-            $movie->actors()->attach($request->input('actorIds'));
+            $movie->actors()->syncWithoutDetaching($request->input('actorIds'));
         }
         // $movie->title = $request->title; 
         // $movie->description = $request->description;

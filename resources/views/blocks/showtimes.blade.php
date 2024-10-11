@@ -8,10 +8,9 @@
                         <p>{{ $cinema_room->name }}</p>
                         <div class="showtimes btn-group flex-wrap">
                             @foreach($cinema_room->showtimes as $showtime)
-                            <a href="#" class="btn btn-outline-primary select-showtime">
-                                {{-- <a href="{{ route('showtime.seatSelection', ['showtime_id' => $showtime->id]) }}" class="btn btn-outline-primary select-showtime"> --}}
-                                    {{ $showtime->show_time }}
-                                </a>
+                            <a href="{{ route('showtime.seatSelection', ['showtime_id' => $showtime->id]) }}" class="btn btn-outline-primary select-showtime">
+                                {{ $showtime->show_time }}
+                            </a>
                             @endforeach
                         </div>
                     </div>

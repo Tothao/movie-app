@@ -17,5 +17,10 @@ class Showtime extends Model
     {
         return $this->belongsTo(CinemaRoom::class, 'cinema_room_id');
     }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }
 
